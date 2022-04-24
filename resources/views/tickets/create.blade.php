@@ -18,8 +18,9 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST">
-                        {!! csrf_field() !!}
+                       <form class="form-horizontal" role="form" action="new-ticket"  method="POST" enctype="multipart/form-data"> 
+                       <?php  //echo Form::open(array('files'=>'true','class'=>'form-horizontal','url'=>'new-ticket')); ?>
+                       
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="col-md-4 control-label">Title</label>
@@ -90,6 +91,18 @@
                                 @endif
                             </div>
                         </div>
+                         <div class="form-group{{ $errors->has('priority') ? ' has-error' : '' }}">
+                            <label for="userattachment" class="col-md-4 control-label">File Upload</label>
+
+                            <div class="col-md-6">
+                               
+                                <?php  //echo Form::file('userattachment'); 
+                                ?>
+                                <input type="file" name="userattachment">
+                                
+                            </div>
+                        </div>
+                         
 
                         <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
                             <label for="message" class="col-md-4 control-label">Message</label>
@@ -112,7 +125,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                  </form>
                 </div>
             </div>
         </div>

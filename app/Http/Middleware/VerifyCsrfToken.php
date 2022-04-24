@@ -16,5 +16,6 @@ class VerifyCsrfToken extends BaseVerifier
         '/logout',
         '/TicketsController/changeAssignee',
         '/change_assignee',
+        '/new-ticket',
     ];
 }

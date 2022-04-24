@@ -39,6 +39,7 @@
 
                 </div>
             </div>
+            @include('tickets.attachments') 
 
             <hr>
 

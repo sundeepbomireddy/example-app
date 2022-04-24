@@ -12,7 +12,7 @@ class TicketsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -56,6 +56,9 @@ class TicketsController extends Controller
      */
     public function store(Request $request, AppMailer $mailer)
     {
+
+
+
         $this->validate($request, [
             'title' => 'required',
             'assigned_to' => 'required',
@@ -64,6 +67,34 @@ class TicketsController extends Controller
             'message' => 'required'
         ]);
 
+
+        $file = $request->file('userattachment');
+
+        
+  
+      //Display File Name
+     $filename=$file->getClientOriginalName();
+  
+   
+      //Display File Extension
+     // echo 'File Extension: '.$file->getClientOriginalExtension();
+     // echo '<br>';
+  
+      //Display File Real Path
+    //  echo 'File Real Path: '.$file->getRealPath();
+   //   echo '<br>';
+   
+      //Display File Size
+      //echo 'File Size: '.$file->getSize();
+     // echo '<br>';
+    
+      //Display File Mime Type
+     // echo 'File Mime Type: '.$file->getMimeType();
+    
+      //Move Uploaded File
+      $destinationPath = 'uploads';
+      $file->move($destinationPath,$file->getClientOriginalName());
+      
         $ticket = new Ticket([
             'title' => $request->input('title'),
             'user_id' => Auth::user()->id,
@@ -72,12 +103,14 @@ class TicketsController extends Controller
             'category_id' => $request->input('category'),
             'priority' => $request->input('priority'),
             'message' => $request->input('message'),
-            'status' => "Open"
+            'status' => "Open",
+            'attachment'=>$filename,
         ]);
+
 
         $ticket->save();
 
-        $mailer->sendTicketInformation(Auth::user(), $ticket);
+        //$mailer->sendTicketInformation(Auth::user(), $ticket);
 
         return redirect()->back()->with("status", "A ticket with ID: #$ticket->ticket_id has been opened.");
     }
